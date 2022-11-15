@@ -1,4 +1,5 @@
 import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
+
 // NOTA: Es necesario tener este archivo para acceder a base de datos
 import serviceAccount from "./FirebaseKey.json" assert { type: "json" }; 
 

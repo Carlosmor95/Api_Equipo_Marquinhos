@@ -12,7 +12,7 @@ router.get("/users", getUsers);
 // Post
 
 
-// Pull
+// Put
 
 
 // Delete
