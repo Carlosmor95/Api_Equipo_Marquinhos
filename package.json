@@ -1,0 +1,23 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API de lenguaje de señas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carlosmor95/Api_Equipo_Marquinhos.git"
+  },
+  "author": "Equipo Relámpagos Marquinhos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Carlosmor95/Api_Equipo_Marquinhos/issues"
+  },
+  "homepage": "https://github.com/Carlosmor95/Api_Equipo_Marquinhos#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "firebase-admin": "^11.2.1"
+  }
+}
