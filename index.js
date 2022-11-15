@@ -1,5 +1,6 @@
 const express = require('express')
 var admin = require("firebase-admin");
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 
 const app = express()
 
@@ -13,11 +14,13 @@ admin.initializeApp({
   databaseURL: "https://lsm-john-deere-default-rtdb.firebaseio.com"
 });
 
-var database = admin.database();
-var ref = database.ref("referencia/de/documento/inaccesible/con/Javascrip/en/el/cliente");
-ref.once("value", function(snapshot) {
-console.log("El dato es", snapshot.val());
+const db = getFirestore();
+
+const users = await db.collection('users').get();
+users.forEach((doc) => {
+  console.log(doc.id, '=>', doc.data());
 });
+
 
 
 app.get('/health', function (req, res) {
