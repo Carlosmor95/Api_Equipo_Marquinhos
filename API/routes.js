@@ -3,7 +3,8 @@ import { Router } from "express";
 import {
 	getUsers,
 	writeUSerData,
-	getDataUser
+	getDataUser, 
+	putlogIn
 } from "./controller.js";
 
 const router = Router();
@@ -16,6 +17,7 @@ router.get("/user", getDataUser);
 router.get("/signIn", writeUSerData);
 
 // Put
+router.put("/login", putlogIn);
 
 
 // Delete

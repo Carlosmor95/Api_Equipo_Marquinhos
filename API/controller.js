@@ -1,10 +1,16 @@
 import db from "./firebase.js";
-
 import {
     getUsersDB,
     writeUserDataDB,
-    getDataUserDB
+    getDataUserDB,
+    putlogInDB
 } from "./dbFunctions.js";
+
+
+export async function putlogIn(req, res) {
+    const { email, password } = req.body;
+    res.send(await(putlogInDB(email, password, res)));
+}
 
 export async function getUsers(req, res) {
     res.setHeader('Content-Type', 'application/json');
