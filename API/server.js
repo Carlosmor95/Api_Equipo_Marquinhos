@@ -1,11 +1,10 @@
 import routes from "./routes.js";
-
 import express from 'express';
 
 const server = express();
 
-server.use(routes);
 server.use(express.json());
+server.use(routes);
 
 server.listen(3000)
 

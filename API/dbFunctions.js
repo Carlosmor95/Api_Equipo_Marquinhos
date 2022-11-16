@@ -1,5 +1,40 @@
-import firebase from 'firebase/compat/app';
+
+import e from "express";
+import { doc, setDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FieldValue } from "firebase-admin/firestore";
+
+
+const config = {
+    apiKey: "AIzaSyC9l7JQ4Wmy3sZUlh51rpbIhiBl-4UmYEQ",
+    authDomain: "lsm-john-deere.firebaseapp.com",
+    databaseURL: "https://lsm-john-deere-default-rtdb.firebaseio.com",
+    projectId: "lsm-john-deere",
+    storageBucket: "lsm-john-deere.appspot.com",
+    messagingSenderId: "936805908022",
+    appId: "1:936805908022:web:91ba54a3a851dea82da297",
+    measurementId: "G-G0TVHHCD05"
+  };
+
+  const app = initializeApp(config);
+  const auth = getAuth(app);
+
+  //const fs = getFirestore(app);
+
+export async function putlogInDB(email, password, res) {
+    await signInWithEmailAndPassword(auth, email, password)
+    .then((data) => {
+        return data.user.getIdToken();
+    })
+    .then((token) => {
+        return res.json({ token });
+    })
+    .catch((err) => {
+        console.error(err);
+        return res.status(403).json({ general: "Wrong credentials, please try again"})
+    });
+}
 
 function makeid(length) {
     var result = '';
