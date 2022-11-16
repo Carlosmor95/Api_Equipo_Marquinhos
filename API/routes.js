@@ -3,7 +3,8 @@ import { Router } from "express";
 import {
 	getUsers,
 	writeUSerData,
-	getDataUser,
+	getDataUser, 
+	putlogIn,
 	createGroup
 } from "./controller.js";
 
@@ -18,6 +19,7 @@ router.get("/signIn", writeUSerData);
 router.get("/createGroup", createGroup);
 
 // Put
+router.put("/login", putlogIn);
 
 
 // Delete
