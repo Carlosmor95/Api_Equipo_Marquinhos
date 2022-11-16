@@ -1,5 +1,5 @@
-import e from "express";
-import { doc, setDoc } from "firebase/firestore";
+import firebase from 'firebase/compat/app';
+import { FieldValue } from "firebase-admin/firestore";
 
 function makeid(length) {
     var result = '';
@@ -68,24 +68,26 @@ export async function getDataUserDB(db, firstName, lastName, eMail){
 }
 
 export async function createGroupDB(db){
+
+    const data = {
+        users: []
+    };
+
     var docID = makeid(28);
     await db.collection('userGroups').doc(docID).set(
         {capital: true}, {merge: true});  
+    
+    await db.collection('userGroups').doc(docID).set(data);
     return "Success, created group: " + docID; 
 }
 
-export async function addUserToGroup(db, firstName, lastName, docName){
-    const data = {
-        firstname: firstName,
-        lastname: lastName,
-    };
-
-    await db.collection('userGroups').get()
-    .then((userGroups) => {
-        userGroups.forEach((doc) =>{
-            console.log(doc.data());
-        });
+export async function addUserToGroupDB(db, eMail, docName){
+    await db.collection('userGroups').doc(docName).update({
+        users: FieldValue.arrayUnion(eMail)
+        
     })
-    console.log('Se añadio el usuario al documento: ', docName);
+    .catch((error) => {
+        console.error(error);
+    });
     return "Success!!";
 }
