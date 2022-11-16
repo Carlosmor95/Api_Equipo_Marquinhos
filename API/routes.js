@@ -4,7 +4,8 @@ import {
 	getUsers,
 	writeUSerData,
 	getDataUser, 
-	putlogIn
+	putlogIn,
+	createGroup
 } from "./controller.js";
 
 const router = Router();
@@ -15,6 +16,7 @@ router.get("/user", getDataUser);
 
 // Post
 router.get("/signIn", writeUSerData);
+router.get("/createGroup", createGroup);
 
 // Put
 router.put("/login", putlogIn);
