@@ -64,13 +64,16 @@ export async function getUsersDB(db) {
 
 //Añadir un usuario a la base de datos con un documento distinto
 //Se necesita un documento distinto para cada usuario, ya que no es posible añadir varios usuarios en uno solo, se sobreescriben
-export async function writeUserDataDB(db, firstName, lastName, eMail, password) {
+export async function writeUserDataDB(db, firstName, lastName, eMail, password, isAdmin, hasGroup, lectionProgress) {
     var docID = makeid(28);
     const data = {
         firstname: firstName,
         lastname: lastName,
         email: eMail,
         password: password,
+        admin: isAdmin,
+        group: hasGroup,
+        lections: lectionProgress,
         uid: docID,
     };
 
@@ -120,6 +123,20 @@ export async function addUserToGroupDB(db, eMail, docName){
     await db.collection('userGroups').doc(docName).update({
         users: FieldValue.arrayUnion(eMail)
         
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+
+    await db.collection('users').get()
+    .then((users) => {
+        users.forEach((doc) =>{
+            if(doc.data().email == eMail){
+                db.collection('users').doc(doc.data().uid).update({
+                    group: docName
+                })
+            }
+        });
     })
     .catch((error) => {
         console.error(error);
