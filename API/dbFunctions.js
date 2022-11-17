@@ -64,14 +64,13 @@ export async function getUsersDB(db) {
 
 //Añadir un usuario a la base de datos con un documento distinto
 //Se necesita un documento distinto para cada usuario, ya que no es posible añadir varios usuarios en uno solo, se sobreescriben
-export async function writeUserDataDB(db, firstName, lastName, eMail, password, isAdmin, hasGroup, lectionProgress) {
+export async function writeUserDataDB(db, firstName, lastName, eMail, password, hasGroup, lectionProgress) {
     var docID = makeid(28);
     const data = {
         firstname: firstName,
         lastname: lastName,
         email: eMail,
         password: password,
-        admin: isAdmin,
         group: hasGroup,
         lections: lectionProgress,
         uid: docID,
@@ -84,6 +83,20 @@ export async function writeUserDataDB(db, firstName, lastName, eMail, password, 
 
     console.log('Se añadio el usuario al documento: ', docID);
     return "Success!!";
+}
+
+export async function writeAdminDataDB(db, eMail, password, companyName){
+    var docID = makeid(28);
+    const data = {
+        email: eMail,
+        password: password,
+        company: companyName,
+        uid: docID,
+    };
+    await db.collection('admins').doc(docID).set({
+        capital: true
+        }, {merge: true});   
+    await db.collection('admins').doc(docID).set(data);
 }
 
 //Obtener los datos de un usuario especifico a través de sus nombres o por su correo electrónico
@@ -105,8 +118,8 @@ export async function getDataUserDB(db, firstName, lastName, eMail){
     return JSON.stringify(usersArray);
 }
 
+//Función para que un administrador pueda crear grupos
 export async function createGroupDB(db){
-
     const data = {
         users: []
     };
@@ -119,6 +132,7 @@ export async function createGroupDB(db){
     return "Success, created group: " + docID; 
 }
 
+//Función para que el administrador pueda añadir usuarios a un grupo
 export async function addUserToGroupDB(db, eMail, docName){
     await db.collection('userGroups').doc(docName).update({
         users: FieldValue.arrayUnion(eMail)
@@ -142,4 +156,21 @@ export async function addUserToGroupDB(db, eMail, docName){
         console.error(error);
     });
     return "Success!!";
+}
+
+//Función para comprobar si un usuario es un administrador, esto no se puede añadir a un usuario normal porqué la cantidad de atributos excede el límite
+export async function isAdminDB(db, eMail){
+    let is = 'false';
+    await db.collection('admins').get()
+    .then((admins) => {
+        admins.forEach((doc) =>{
+            if(doc.data().email == eMail){
+                is = 'true';
+            }
+        });
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+    return is;
 }

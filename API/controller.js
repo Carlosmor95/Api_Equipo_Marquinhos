@@ -2,10 +2,12 @@ import db from "./firebase.js";
 import {
     getUsersDB,
     writeUserDataDB,
+    writeAdminDataDB,
     getDataUserDB,
     putlogInDB,
     createGroupDB,
-    addUserToGroupDB
+    addUserToGroupDB,
+    isAdminDB
 } from "./dbFunctions.js";
 
 
@@ -44,4 +46,14 @@ export async function createGroup(req, res) {
 export async function addUserToGroup(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(await(addUserToGroupDB(db, 'correo@tec.mx', 'zkwoInwK56pa5YDoqriYqNqXJMfb')))
+}
+
+export async function writeAdminData(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(await(writeAdminDataDB(db, 'A01634536@tec.mx', '12345', 'John Deere')))
+}
+
+export async function isAdmin(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(await(isAdminDB(db, 'A01634536@tec.mx')))
 }
