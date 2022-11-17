@@ -28,7 +28,7 @@ No se como sea bien en las MAC
 */ 
 export async function writeUSerData(req, res){
     res.setHeader('Content-Type', 'application/json');
-    res.send(await(writeUserDataDB(db, 'Daniel', 'Case', 'correo@tec.mx', '123')))
+    res.send(await(writeUserDataDB(db, 'Daniel', 'Case', 'correo@tec.mx', '123', 'false', ' ', '0')))
 }
 
 export async function getDataUser(req, res){
@@ -43,5 +43,5 @@ export async function createGroup(req, res) {
 
 export async function addUserToGroup(req, res) {
     res.setHeader('Content-Type', 'application/json');
-    res.send(await(addUserToGroupDB(db, 'correo@tec.mx', 'rXjhG3iVTx2wCTlJ0JVw0c8OkK68')))
+    res.send(await(addUserToGroupDB(db, 'correo@tec.mx', 'zkwoInwK56pa5YDoqriYqNqXJMfb')))
 }
